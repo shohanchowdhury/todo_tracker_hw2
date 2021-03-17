@@ -13,13 +13,18 @@ class ToDoItem extends Component {
             id: listItem.id,
             description: listItem.description,
             date: listItem.due_date,
-            status: listItem.status
+            status: listItem.status,
+            firstItem: false,
+            lastItem: false,
+            
 
         }
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tToDoItem " + this.props.toDoListItem.id + " constructor");
     }
     
+
+
 
     componentDidMount = () => {
         // DISPLAY WHERE WE ARE
@@ -28,7 +33,10 @@ class ToDoItem extends Component {
 
     handleClickDesc = () => {
         console.log(this.props.toDoListItem);
+
         
+        this.props.toDoListItem.description = <input type="text" onBlur={this.changeDesc}/>
+
         this.setState({
             description: <input type="text" onBlur={this.changeDesc}/>
         })
@@ -38,8 +46,11 @@ class ToDoItem extends Component {
         
     }
 
+   
     handleClickDate = () => {
         console.log(this.props.toDoListItem);
+
+        this.props.toDoListItem.due_date = <input type="date" onBlur={this.changeDate}/>
         
         this.setState({
             date: <input type="date" onBlur={this.changeDate}/>
@@ -49,6 +60,12 @@ class ToDoItem extends Component {
 
     handleClickStatus = () => {
         console.log(this.props.toDoListItem);
+
+        this.props.toDoListItem.status = <select onBlur={this.changeStatus}> 
+        <option value = "complete">complete</option>
+        <option value = "incomplete">incomplete</option>
+        
+    </select> 
         
         this.setState({
             status: <select onBlur={this.changeStatus}> 
@@ -60,13 +77,6 @@ class ToDoItem extends Component {
     
     }
 
-    handleClickUp = () => {
-        console.log("UPPP");
-        this.setState({
-            id: (this.props.toDoListItem.id-1)
-        })
-     
-    }
 
     changeDesc = event =>{
         if(event.target.value){
@@ -110,26 +120,82 @@ class ToDoItem extends Component {
         }
     }
 
+    deleteItem = (e) => {
+        this.props.deleteItemWork(this.props.toDoListItem)
+    }
+
+    moveUpItem = (e) => {
+        this.props.moveUpItemWork(this.props.toDoListItem)
+    }
+
+    moveDownItem = (e) => {
+        this.props.moveDownItemWork(this.props.toDoListItem)
+    }
+
+    checkFirst = (e) => {
+        if(this.props.isFirst(this.props.toDoListItem)){
+            // this.setState({
+            //     firstItem: true
+            // })
+            return true;
+        }
+        else{
+            return false;
+
+        }
+    }
+
+    checkLast = (e) => {
+        if(this.props.isLast(this.props.toDoListItem)){
+            // this.setState({
+            //     LastItem: true
+            // })
+            return true
+        }
+        else{
+            return false;
+        }
+    }
+
+    checkIsComplete = (e) => {
+        if(this.state.status==="complete"){
+            return true
+        }
+        return false
+    }
+
+
+
 
     render() {
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tToDoItem render");
         let listItem = this.props.toDoListItem;
-        let statusType = "status-complete";
-        if (listItem.status === "incomplete")
-            statusType = "status-incomplete";
+        // if(this.checkFirst()){
+        //     console.log("HMMM")
 
+        // }
+        // if(this.checkLast()){
+        //     console.log("UUUHMMM")
+            
+        // }
+        let statusType = "status-complete";
+        if (listItem.status === "incomplete"){
+            statusType = "status-incomplete";
+        }
+        
+        
         return (
             <div id={'todo-list-item-' + listItem.id} className='list-item-card'>
-                <div className='item-col task-col' onClick={() => this.handleClickDesc()}>{this.state.description}</div>
-                <div className='item-col due-date-col' onClick={() => this.handleClickDate()}>{this.state.date}</div>
-                <div className='item-col status-col'  onClick={() => this.handleClickStatus()}>{this.state.status}</div>
+                <div className='item-col task-col' onClick={() => this.handleClickDesc()}>{listItem.description}</div>
+                <div className='item-col due-date-col' onClick={() => this.handleClickDate()}>{listItem.due_date}</div>
+                <div className='item-col status-col' style={!(this.checkIsComplete()) ? {color: '#E8FF22'} : { color: '#3B6FFA' }} onClick={() => this.handleClickStatus()}>{listItem.status}</div>
                 {/* <div className='item-col status-col' className={statusType}>{listItem.status}</div> */}
-                <div className='item-col test-4-col'></div>
+                {/* <div className='item-col test-4-col'></div> */}
                 <div className='item-col list-controls-col'>
-                    <KeyboardArrowUp className='list-item-control todo-button' onClick={() => this.handleClickUp()}/>
-                    <KeyboardArrowDown className='list-item-control todo-button' />
-                    <Close className='list-item-control todo-button' />
+                    <KeyboardArrowUp style={!(this.checkFirst()) ? {} : { backgroundColor: '#353a44', color: "484848" }} className='list-item-control todo-button'  onClick={() => this.moveUpItem()}/>
+                    <KeyboardArrowDown style={!(this.checkLast()) ? {} :  { backgroundColor: '#353a44', color: "484848" }} className='list-item-control todo-button' onClick={() => this.moveDownItem()}/>
+                    <Close className='list-item-control todo-button' onClick={() => this.deleteItem()} />
                     <div className='list-item-control'></div>
         <div className='list-item-control'></div>
                 </div>

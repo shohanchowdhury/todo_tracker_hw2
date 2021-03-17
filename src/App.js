@@ -7,7 +7,7 @@ import jsTPS from './common/jsTPS' // WE NEED THIS TOO
 import Navbar from './components/Navbar'
 import LeftSidebar from './components/LeftSidebar'
 import Workspace from './components/Workspace'
-import Modal from './components/Modal'
+import { Modal } from './components/Modal'
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -22,6 +22,8 @@ class App extends Component {
 
     // MAKE OUR TRANSACTION PROCESSING SYSTEM
     this.tps = new jsTPS();
+
+    
 
     // CHECK TO SEE IF THERE IS DATA IN LOCAL STORAGE FOR THIS APP
     let recentLists = localStorage.getItem("recentLists");
@@ -59,8 +61,7 @@ class App extends Component {
 
   // WILL LOAD THE SELECTED LIST
   loadToDoList = (toDoList) => {
-    console.log("loading " + toDoList);
-
+    
     // MAKE SURE toDoList IS AT THE TOP OF THE STACK BY REMOVING THEN PREPENDING
     const nextLists = this.state.toDoLists.filter(testList =>
       testList.id !== toDoList.id
@@ -71,19 +72,51 @@ class App extends Component {
       toDoLists: nextLists,
       currentList: toDoList
     });
+
+    console.log(this.state.currentList);
+
   }
 
   addNewList = () => {
     let newToDoListInList = [this.makeNewToDoList()];
+    newToDoListInList.id = this.state.nextListId;
     let newToDoListsList = [...newToDoListInList, ...this.state.toDoLists];
     let newToDoList = newToDoListInList[0];
-
+    newToDoList.id = this.state.nextListId
     // AND SET THE STATE, WHICH SHOULD FORCE A render
     this.setState({
       toDoLists: newToDoListsList,
       currentList: newToDoList,
       nextListId: this.state.nextListId+1
-    }, this.afterToDoListsChangeComplete);
+      
+    },
+    
+    this.afterToDoListsChangeComplete);
+  }
+
+
+  getLoadListName = () => {
+    return this.state.currentList.name;
+}
+
+  closeList = () => {
+    this.setState({
+      currentList: {items: []},
+    })
+  }
+
+  deleteList = () => {
+    console.log(this.state.toDoLists)
+    console.log(this.state.currentList.id)
+
+    var array = this.state.toDoLists;
+    var index = array.indexOf(this.state.currentList)
+    console.log(index)
+    array.splice(index, 1)
+    this.setState({
+      toDoLists: array,
+      currentList: {items: []},
+    })
   }
 
   makeNewToDoList = () => {
@@ -95,10 +128,22 @@ class App extends Component {
     return newToDoList;
   }
 
+
   makeNewToDoListItem = () =>  {
     let newToDoListItem = {
+      id: "",
       description: "No Description",
-      dueDate: "none",
+      due_date: "none",
+      status: "incomplete"
+    };
+    return newToDoListItem;
+  }
+
+  makeNewToDoListItem2 = (e) =>  {
+    let newToDoListItem = {
+      id: e,
+      description: "No Description",
+      due_date: "none",
       status: "incomplete"
     };
     return newToDoListItem;
@@ -106,8 +151,9 @@ class App extends Component {
 
   // THIS IS A CALLBACK FUNCTION FOR AFTER AN EDIT TO A LIST
   afterToDoListsChangeComplete = () => {
+    console.log(this.state.toDoLists)
     console.log("App updated currentToDoList: " + this.state.currentList);
-
+    
     // WILL THIS WORK? @todo
     let toDoListsString = JSON.stringify(this.state.toDoLists);
     localStorage.setItem("recent_work", toDoListsString);
@@ -124,7 +170,14 @@ class App extends Component {
           loadToDoListCallback={this.loadToDoList}
           addNewListCallback={this.addNewList}
         />
-        <Workspace toDoListItems={items} />
+        <Workspace 
+        toDoListItems={items} 
+        addNewItemCallback={this.makeNewToDoListItem}
+        addNewItemCallback2={this.makeNewToDoListItem2}
+        getLoadListName={this.getLoadListName}
+        closeList={this.closeList}
+        deleteList={this.deleteList}
+        />
       </div>
     );
   }

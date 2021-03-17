@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import '../css/Modal.css'
 
-class Modal extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className = "modal">
-            <div className = "modal-content">
-                <div className = "modal-header">
-                    <h4 className = "modal-title">Modal Title</h4>
+export const Modal = () =>{
+    return (
+        <div className="modal-wrapper">
+            <div className="modal-header">
+                <p>Are you sure you want to delete?</p>
+                <span className= "close-modal"> x</span>
+            </div>
+            <div className="modal-content">
+                <div className="modal-body">
+                    
                 </div>
-                <div className = "modal_body">This is Modal Content
-                </div>
-                <div className = "modal-footer">
-                    <button className ="button">Close</button>
+                <div className="modal-footer">
+                    {/* <button className ="cancel-modal">Close</button> */}
+                    <button className ="okay-modal">Confirm</button>
                 </div>
             </div>
         </div>
-        );
-    }
+    )
 }
-
-export default Modal

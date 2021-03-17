@@ -4,10 +4,14 @@ import React, { Component } from 'react'
 class ListLink extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            name: this.props.toDoList.name
+        }
         
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tListLink " + this.props.toDoList.key + " constructor");
     }
+    
 
     componentDidMount = () => {
         // DISPLAY WHERE WE ARE
@@ -15,7 +19,35 @@ class ListLink extends Component {
     }
 
     handleLoadList = () => {
+        // console.log(this.props.toDoList.name)
         this.props.loadToDoListCallback(this.props.toDoList);
+    }
+
+    
+
+    handleDoubleClick = () => {
+        
+        this.setState({
+            name: <input type="text" onBlur={this.changeListName}/>
+        })
+        // this.props.toDoListItem.description = <input></input>;
+        // console.log(this.props.toDoListItem.description);
+        
+        
+    }
+
+    changeListName = event =>{
+        if(event.target.value){
+            this.setState({
+                name: event.target.value
+            })
+            this.props.toDoList.name = event.target.value
+        }
+        else{
+            this.setState({
+                name: this.props.toDoList.name
+            })
+        }
     }
 
     render() {
@@ -26,8 +58,9 @@ class ListLink extends Component {
             <div 
                 className='todo-list-button'
                 onClick={this.handleLoadList}
+                onDoubleClick={this.handleDoubleClick}
             >
-                {this.props.toDoList.name}<br />
+                {this.state.name}<br />
             </div>
         )
     }

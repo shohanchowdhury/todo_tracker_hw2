@@ -12,6 +12,7 @@ class LeftSidebar extends Component {
         this.props.addNewListCallback();
     }
 
+
     render() {
         return (
             <div id="left-sidebar">
@@ -21,10 +22,12 @@ class LeftSidebar extends Component {
                         <AddBox 
                             id="add-list-button"
                             className="material-icons todo_button"
-                            onClick={this.handleAddNewList} />
+                            onClick={this.handleAddNewList} 
+                            />
+                            
                     </span>
                 </div>
-                <div id="todo-lists-list">
+                <div id="todo-lists-list" >
                 {
                     this.props.toDoLists.map((toDoList) => (
                         <ListLink
