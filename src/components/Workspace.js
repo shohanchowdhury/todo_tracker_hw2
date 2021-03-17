@@ -16,7 +16,7 @@ class Workspace extends Component {
         return (
             <div id="workspace">
                 <div id="todo-list-header-card" className="list-item-card">
-                    <div id="task-col-header" className="item-col todo-button">Task</div>
+                    <div id="task-col-header" className="item-col todo-button" onClick={console.log("ASD")}>Task</div>
                     <div id="date-col-header" className="item-col todo-button">Due Date</div>
                     <div id="status-col-header" className="item-col todo-button">Status</div>
                     <div className="item-col" display="flex" flexDirection="row" flexWrap="nowrap">

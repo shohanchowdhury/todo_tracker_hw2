@@ -7,6 +7,7 @@ import jsTPS from './common/jsTPS' // WE NEED THIS TOO
 import Navbar from './components/Navbar'
 import LeftSidebar from './components/LeftSidebar'
 import Workspace from './components/Workspace'
+import Modal from './components/Modal'
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -116,6 +117,7 @@ class App extends Component {
     let items = this.state.currentList.items;
     return (
       <div id="root">
+        <Modal />
         <Navbar />
         <LeftSidebar 
           toDoLists={this.state.toDoLists}
