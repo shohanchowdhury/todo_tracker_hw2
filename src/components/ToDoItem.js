@@ -17,10 +17,10 @@ class ToDoItem extends Component {
             firstItem: false,
             lastItem: false,
             
-
+            
         }
         // DISPLAY WHERE WE ARE
-        console.log("\t\t\tToDoItem " + this.props.toDoListItem.id + " constructor");
+        
     }
     
 
@@ -164,11 +164,15 @@ class ToDoItem extends Component {
         return false
     }
 
-
+    updateStorageItem = () => {
+        this.props.updateStorage();
+    }
 
 
     render() {
         // DISPLAY WHERE WE ARE
+        this.updateStorageItem();
+
         console.log("\t\t\tToDoItem render");
         let listItem = this.props.toDoListItem;
         // if(this.checkFirst()){
@@ -183,18 +187,20 @@ class ToDoItem extends Component {
         if (listItem.status === "incomplete"){
             statusType = "status-incomplete";
         }
+
         
         
         return (
+            
             <div id={'todo-list-item-' + listItem.id} className='list-item-card'>
                 <div className='item-col task-col' onClick={() => this.handleClickDesc()}>{listItem.description}</div>
                 <div className='item-col due-date-col' onClick={() => this.handleClickDate()}>{listItem.due_date}</div>
-                <div className='item-col status-col' style={!(this.checkIsComplete()) ? {color: '#E8FF22'} : { color: '#3B6FFA' }} onClick={() => this.handleClickStatus()}>{listItem.status}</div>
+                <div className='item-col status-col' style={!(this.checkIsComplete()) ? {color: '#E9CE2C'} : { color: '#3B6FFA' }} onClick={() => this.handleClickStatus()}>{listItem.status}</div>
                 {/* <div className='item-col status-col' className={statusType}>{listItem.status}</div> */}
                 {/* <div className='item-col test-4-col'></div> */}
                 <div className='item-col list-controls-col'>
-                    <KeyboardArrowUp style={!(this.checkFirst()) ? {} : { backgroundColor: '#353a44', color: "484848" }} className='list-item-control todo-button'  onClick={() => this.moveUpItem()}/>
-                    <KeyboardArrowDown style={!(this.checkLast()) ? {} :  { backgroundColor: '#353a44', color: "484848" }} className='list-item-control todo-button' onClick={() => this.moveDownItem()}/>
+                    <KeyboardArrowUp style={!(this.checkFirst()) ? {} : { backgroundColor: '#353a44', color: "#484848" }} className='list-item-control todo-button'  onClick={() => this.moveUpItem()}/>
+                    <KeyboardArrowDown style={!(this.checkLast()) ? {} :  { backgroundColor: '#353a44', color: "#484848" }} className='list-item-control todo-button' onClick={() => this.moveDownItem()}/>
                     <Close className='list-item-control todo-button' onClick={() => this.deleteItem()} />
                     <div className='list-item-control'></div>
         <div className='list-item-control'></div>

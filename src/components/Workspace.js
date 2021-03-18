@@ -51,6 +51,9 @@ class Workspace extends Component {
                 
                 console.log(this.props.toDoListItems)
             // }
+
+            
+            
         }
     }
 
@@ -136,7 +139,9 @@ class Workspace extends Component {
         return false;
     }
 
-    
+    updateStorage = () =>{
+        this.props.updateStorage()
+    }
 
 
 
@@ -171,6 +176,7 @@ class Workspace extends Component {
                             deleteItemWork={this.deleteItemW}
                             moveUpItemWork={this.moveUpItemW}
                             moveDownItemWork={this.moveDownItemW}
+                            updateStorage={this.updateStorage}
 
                         />))
                     }

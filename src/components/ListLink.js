@@ -50,6 +50,14 @@ class ListLink extends Component {
         }
     }
 
+
+    isCurrentList = () => {
+        // console.log(this.props.toDoList===this.props.currentList)
+        // console.log(this.props.toDoList)
+        // console.log(this.props.currentList)
+        return(this.props.toDoList===this.props.currentList)
+    }
+
     render() {
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tListLink render");
@@ -59,7 +67,9 @@ class ListLink extends Component {
                 className='todo-list-button'
                 onClick={this.handleLoadList}
                 onDoubleClick={this.handleDoubleClick}
+                style={!(this.isCurrentList()) ? {} : { backgroundColor: '#E9CE2C', color: "#181D27" }}
             >
+                
                 {this.state.name}<br />
             </div>
         )

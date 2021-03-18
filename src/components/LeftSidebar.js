@@ -12,6 +12,7 @@ class LeftSidebar extends Component {
         this.props.addNewListCallback();
     }
 
+    
 
     render() {
         return (
@@ -27,13 +28,15 @@ class LeftSidebar extends Component {
                             
                     </span>
                 </div>
-                <div id="todo-lists-list" >
+                <div id="todo-lists-list"  > 
                 {
                     this.props.toDoLists.map((toDoList) => (
                         <ListLink
-                            key={toDoList.id}
+                            key={toDoList.id} 
                             toDoList={toDoList}                                // PASS THE LIST TO THE CHILDREN
-                            loadToDoListCallback={this.props.loadToDoListCallback} />  // PASS THE CALLBACK TO THE CHILDREN
+                            loadToDoListCallback={this.props.loadToDoListCallback} 
+                            currentList={this.props.currentList} />  // PASS THE CALLBACK TO THE CHILDREN
+                            
                     ))
                 }
                 </div>

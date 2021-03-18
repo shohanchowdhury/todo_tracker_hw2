@@ -75,6 +75,7 @@ class App extends Component {
 
     console.log(this.state.currentList);
 
+    
   }
 
   addNewList = () => {
@@ -103,6 +104,7 @@ class App extends Component {
     this.setState({
       currentList: {items: []},
     })
+
   }
 
   deleteList = () => {
@@ -117,6 +119,8 @@ class App extends Component {
       toDoLists: array,
       currentList: {items: []},
     })
+    let toDoListsString = JSON.stringify(this.state.toDoLists);
+    localStorage.setItem("recentLists", toDoListsString);
   }
 
   makeNewToDoList = () => {
@@ -156,10 +160,18 @@ class App extends Component {
     
     // WILL THIS WORK? @todo
     let toDoListsString = JSON.stringify(this.state.toDoLists);
-    localStorage.setItem("recent_work", toDoListsString);
+    localStorage.setItem("recentLists", toDoListsString);
+  }
+
+  updateStorage =  () => {
+    let toDoListsString = JSON.stringify(this.state.toDoLists);
+    localStorage.setItem("recentLists", toDoListsString);
+        
   }
 
   render() {
+    let toDoListsString = JSON.stringify(this.state.toDoLists);
+    localStorage.setItem("recentLists", toDoListsString);
     let items = this.state.currentList.items;
     return (
       <div id="root">
@@ -169,6 +181,7 @@ class App extends Component {
           toDoLists={this.state.toDoLists}
           loadToDoListCallback={this.loadToDoList}
           addNewListCallback={this.addNewList}
+          currentList={this.state.currentList}
         />
         <Workspace 
         toDoListItems={items} 
@@ -177,6 +190,7 @@ class App extends Component {
         getLoadListName={this.getLoadListName}
         closeList={this.closeList}
         deleteList={this.deleteList}
+        updateStorage={this.updateStorage}
         />
       </div>
     );
