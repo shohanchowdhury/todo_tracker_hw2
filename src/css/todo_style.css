@@ -135,6 +135,8 @@
     color: #aaa;
     font-size: 30px;
     font-weight: bold;
+    padding-left: 500px;
+    
 }
 .close:hover,
 .close:focus {
@@ -147,7 +149,7 @@ cursor: pointer;
     top: 50px;
 }
 #dont-delete-button{
-    padding-left: 250px;
+    padding-left: 400px;
     position: relative;
     top: 50px;
 }
@@ -176,7 +178,16 @@ cursor: pointer;
 .status-complete {
     color: var(--swatch-text-accent);
 }
+#undo-button,#redo-button{
+    font-size: 30px;
+}
 
 #add-item-button, #delete-list-button, #close-list-button {
+    font-size: 30px;
     text-align: center;
+}
+
+.list-controls-col{
+    width: 200px;
+    padding-left: 145px;
 }

@@ -5,15 +5,14 @@ import { jsTPS_Transaction } from "../common/jsTPS.js"
 
 // THIS TRANSACTION IS FOR ADDING A NEW ITEM TO A TODO LIST
 export default class AddNewItem_Transaction extends jsTPS_Transaction {
-    constructor(app,id,todoList,allTodoLists,newToDoListItem,wspace) {
+    constructor(app, wspace, toDoListItems, newItem, id) {
         super();
         this.app = app;
-        this.todoList = todoList;
-        this.todoBefore = JSON.parse(JSON.stringify(todoList));
-        this.todoBeforeitems = JSON.parse(JSON.stringify(this.todoList.items));
-        this.id=id;
-        this.newItem = newToDoListItem;
         this.workspace = wspace;
+        this.todoBefore = JSON.parse(JSON.stringify(toDoListItems));
+        this.todoList = toDoListItems;
+        this.newItem = newItem;
+        this.id = id;
 
         
 
@@ -21,26 +20,12 @@ export default class AddNewItem_Transaction extends jsTPS_Transaction {
 
     doTransaction = () => {
         // // MAKE A NEW ITEM
-        console.log("HEY")
+        this.todoList.push(this.newItem)
+        this.workspace.setState({
+            toDoListItems: this.todoBefore.toDoListItems
+        })
 
-        console.log(this.newItem)
-        // console.log(this.todoList.items[2])
-        console.log(this.todoList.items.length)
-        this.todoList.items[this.todoList.items.length]=this.newItem
-
-        
-
-        // this.todoList.push(this.newItem)
-
-        // // this.itemAdded = this.model.addNewItem();
-        // // console.log(this.todoList);
-        // this.todoList.push(this.newItem)
-        // this.workspace.setState({
-        //     toDoListItems: this.todoList.toDoListItems
-        // })
-        // // console.log(this.todoList);
-        // // console.log(this.todoBefore);
-
+        console.log(this.id)
 
     }
 
@@ -48,24 +33,16 @@ export default class AddNewItem_Transaction extends jsTPS_Transaction {
         // console.log(this.todoList)
         // console.log(this.todoBefore)
         
-        this.todoList.items=this.todoBeforeitems
+        // console.log(this.removedItem)
+        console.log(this.id)
 
-        this.app.setState({
-            currentList: this.todoList
+        
+
+        this.todoList.splice(this.todoList.indexOf(this.newItem), 1)
+        this.workspace.setState({
+            toDoListItems: this.todoList
         })
 
-        // this.todoList.items[this.todoList.items.length-1]=""
-        console.log(this.todoList.items)
-
-
-        // this.todoList.splice(this.id,1)
-        // this.workspace.setState({
-        //     toDoListItems: this.todoBefore.toDoListItems
-        // })
-
-        console.log("WAY")
-        
-        
-        
+    
     }
 }

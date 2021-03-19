@@ -12,7 +12,10 @@ class LeftSidebar extends Component {
         this.props.addNewListCallback();
     }
 
-    
+    updateStorage = () => {
+        this.props.updateStorage();
+    }
+
 
     render() {
         return (
@@ -35,7 +38,9 @@ class LeftSidebar extends Component {
                             key={toDoList.id} 
                             toDoList={toDoList}                                // PASS THE LIST TO THE CHILDREN
                             loadToDoListCallback={this.props.loadToDoListCallback} 
+                            updateStorage={this.updateStorage}
                             currentList={this.props.currentList} />  // PASS THE CALLBACK TO THE CHILDREN
+                            
                             
                     ))
                 }

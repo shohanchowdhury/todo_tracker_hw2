@@ -32,6 +32,7 @@ class ListLink extends Component {
         })
         // this.props.toDoListItem.description = <input></input>;
         // console.log(this.props.toDoListItem.description);
+
         
         
     }
@@ -50,6 +51,10 @@ class ListLink extends Component {
         }
     }
 
+    updateStorage = () => {
+        this.props.updateStorage();
+    }
+
 
     isCurrentList = () => {
         // console.log(this.props.toDoList===this.props.currentList)
@@ -59,6 +64,7 @@ class ListLink extends Component {
     }
 
     render() {
+        this.updateStorage();
         // DISPLAY WHERE WE ARE
         console.log("\t\t\tListLink render");
 

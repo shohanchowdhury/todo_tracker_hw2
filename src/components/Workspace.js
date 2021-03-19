@@ -33,6 +33,9 @@ class Workspace extends Component {
         this.setState({ show: false });
       };
 
+
+      
+
     handleAddNewItem = () =>{
 
        // NEED TO FIX LIST WITH 0 ELEMENTS 
@@ -72,14 +75,17 @@ class Workspace extends Component {
                 console.log(this.props.toDoListItems)
                 console.log(this)
 
-                this.props.addNewItemCallback2(this,nextId,this.state.toDoListItems)
+                // this.props.addNewItemCallback2(this,nextId,this.state.toDoListItems)
 
 
                 
-                // console.log(this.props.toDoListItems[this.props.toDoListItems.length]=newItem)
-                this.setState({
-                    toDoListItems: this.props.toDoListItems
-                })
+                // // console.log(this.props.toDoListItems[this.props.toDoListItems.length]=newItem)
+                // this.setState({
+                //     toDoListItems: this.props.toDoListItems
+                // })
+
+                
+                this.props.addNewItemCallback2(this,this.props.toDoListItems)
 
                 
 
@@ -91,7 +97,23 @@ class Workspace extends Component {
         }
     }
 
+    updateState = () => {
+        console.log("DSAASD")
+        this.setState({
+            show:this.state.show
+        })
+    }
+
     
+
+    componentDidMount(){
+        document.addEventListener('keydown',this.keydownHandler);
+    }
+      componentWillUnmount(){
+        document.removeEventListener('keydown',this.keydownHandler);
+    }
+
+
 
     handleCloseList = () => {
         this.props.closeList();
@@ -229,10 +251,12 @@ class Workspace extends Component {
 
     undoAddTransac = () =>{
         this.props.undoAddNewTransac();
+        this.updateState()
     }
 
     redoAddNewTransac = () =>{
         this.props.redoAddNewTransac();
+        this.updateState()
     }
 
     updateStorage = () =>{
@@ -244,14 +268,37 @@ class Workspace extends Component {
     }
 
     hasRedo = () =>{
-        return(this.props.tps.hasTransactionToRedo())    }
+        return(this.props.tps.hasTransactionToRedo())    
+    }
 
+    hasCurrentList = () =>{
+        return(JSON.stringify(this.props.currentList)!=="{\"items\":[]}")
+    }
 
+    keydownHandler = (e) =>{
+        
+        // this.undoAddNewTransac()
+        if(e.keyCode===90 && e.ctrlKey){
+            this.undoAddTransac()
+            this.setState({
+                show:this.state.show
+            })
+            
+        }
+        if(e.keyCode===89 && e.ctrlKey){
+            this.redoAddNewTransac()
+            this.setState({
+                show:this.state.show
+            })
+        }
+    }
 
     render() {
         return (
             <div id="workspace">
+
                 <div id="myModal" className="modal" style={!(this.state.show) ? {display: 'none'} : { color: 'block' }}>
+                <input type="text" id="one" onKeyPress={this.handleKeyPress} />
                     <div className="modal-content" >
                         <span id="close-modal" className="close" onClick={this.hideModal} >&times;</span>
                         <p>Are you sure you want to delete?</p>
@@ -274,9 +321,10 @@ class Workspace extends Component {
                             id="add-item-button"
                             className="list-item-control material-icons todo-button" 
                             onClick={this.handleAddNewItem}
+                            style={!(this.hasCurrentList()) ? {display:"none"} : {}}
                             />
-                        <Delete id="delete-list-button" className="list-item-control material-icons todo-button" onClick={this.showModal}/>
-                        <Close id="close-list-button" className="list-item-control material-icons todo-button" onClick={this.handleCloseList} />
+                        <Delete id="delete-list-button" className="list-item-control material-icons todo-button" style={!(this.hasCurrentList()) ? {display:"none"} : {}} onClick={this.showModal}/>
+                        <Close id="close-list-button" className="list-item-control material-icons todo-button" style={!(this.hasCurrentList()) ? {display:"none"} : {}} onClick={this.handleCloseList} />
                     </div>
                 </div>
                 <div id="todo-list-items-div">
@@ -295,6 +343,7 @@ class Workspace extends Component {
                             changeDesc={this.changeDesc}
                             changeDate={this.changeDate}
                             changeStatus={this.changeStatus}
+                            updateState={this.updateState}
 
 
                         />))

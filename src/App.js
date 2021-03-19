@@ -74,7 +74,9 @@ class App extends Component {
       
     }
     
+
   }
+  
   
 
   // WILL LOAD THE SELECTED LIST
@@ -119,6 +121,7 @@ class App extends Component {
 }
 
   closeList = () => {
+    this.tps.clearAllTransactions();
     this.setState({
       currentList: {items: []},
     })
@@ -126,9 +129,10 @@ class App extends Component {
   }
 
   deleteList = () => {
+    this.tps.clearAllTransactions();
     console.log(this.state.toDoLists)
     console.log(this.state.currentList.id)
-    console.log("HOOOHHAAA")
+    
 
 
     var array = this.state.toDoLists;
@@ -144,6 +148,7 @@ class App extends Component {
   }
 
   makeNewToDoList = () => {
+    this.tps.clearAllTransactions();
     let newToDoList = {
       id: this.highListId,
       name: 'Untitled',
@@ -163,7 +168,7 @@ class App extends Component {
     return newToDoListItem;
   }
 
-  makeNewToDoListItem2 = (wspace,nextId,toDoListItems,) =>  {
+  makeNewToDoListItem2 = (wspace,toDoListItems) =>  {
     
     // this.props.addNewItemCallback2(nextId,this.props.toDoListItems,this)
     let highListId = -1;
@@ -181,15 +186,21 @@ class App extends Component {
       }
     }
     
-    nextId=highListItemId+1
+    let nextId=highListItemId+1
     let newToDoListItem = {
       id: nextId,
       description: "No Description",
       due_date: "none",
       status: "incomplete"
     };
-    let transaction = new AddNewItem_Transaction(this,nextId,this.state.currentList,this.state.toDoLists,newToDoListItem,wspace)
-    this.tps.addTransaction(transaction)
+
+    // console.log("YEEEE")
+    // console.log(this.state.toDoLists[0])
+    // console.log(this.state.currentList)
+    
+    this.addItem23(wspace,toDoListItems,newToDoListItem,nextId)
+    // let transaction = new AddNewItem_Transaction(this,nextId,this.state.currentList,this.state.toDoLists,newToDoListItem,wspace)
+    // this.tps.addTransaction(transaction)
 
   
   }
@@ -228,10 +239,19 @@ class App extends Component {
 
   redoAddNewTransac = () =>{
     this.tps.doTransaction();
+    this.setState({
+      toDoLists:this.state.toDoLists
+    })
 
   }
 
   printnothing = () => {
+  }
+
+  addItem23 = (wspace, toDoListItems, newItem, nextId) =>{
+    let transaction = new AddNewItem_Transaction(this,wspace,toDoListItems,newItem,nextId)
+    this.tps.addTransaction(transaction)
+
   }
 
   deleteItem = (wspace, toDoListItems, index) => {
@@ -292,6 +312,8 @@ class App extends Component {
           loadToDoListCallback={this.loadToDoList}
           addNewListCallback={this.addNewList}
           currentList={this.state.currentList}
+          updateStorage={this.updateStorage}
+
         />
         <Workspace 
         toDoListItems={items} 
