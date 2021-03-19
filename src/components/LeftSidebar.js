@@ -16,6 +16,10 @@ class LeftSidebar extends Component {
         this.props.updateStorage();
     }
 
+    currentListNull = () => {
+        return(JSON.stringify(this.props.currentList)==="{\"items\":[]}")
+    }
+
 
     render() {
         return (
@@ -27,6 +31,7 @@ class LeftSidebar extends Component {
                             id="add-list-button"
                             className="material-icons todo_button"
                             onClick={this.handleAddNewList} 
+                            style={!(this.currentListNull()) ? {display:"none"} : {}}
                             />
                             
                     </span>
