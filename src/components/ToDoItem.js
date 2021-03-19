@@ -16,6 +16,9 @@ class ToDoItem extends Component {
             status: listItem.status,
             firstItem: false,
             lastItem: false,
+            oldname: "",
+            olddate: "",
+            oldstatus: "",
             
             
         }
@@ -32,14 +35,21 @@ class ToDoItem extends Component {
     }
 
     handleClickDesc = () => {
+
         console.log(this.props.toDoListItem);
 
-        
+        if(typeof this.props.toDoListItem.description === 'string'){
+            this.setState({
+                oldname:this.props.toDoListItem.description
+            })
+        }
         this.props.toDoListItem.description = <input type="text" onBlur={this.changeDesc}/>
 
         this.setState({
             description: <input type="text" onBlur={this.changeDesc}/>
         })
+
+
         // this.props.toDoListItem.description = <input></input>;
         // console.log(this.props.toDoListItem.description);
         
@@ -48,7 +58,11 @@ class ToDoItem extends Component {
 
    
     handleClickDate = () => {
-        console.log(this.props.toDoListItem);
+        if(typeof this.props.toDoListItem.due_date === 'string'){
+            this.setState({
+                olddate:this.props.toDoListItem.due_date
+            })
+        }
 
         this.props.toDoListItem.due_date = <input type="date" onBlur={this.changeDate}/>
         
@@ -59,7 +73,11 @@ class ToDoItem extends Component {
     }
 
     handleClickStatus = () => {
-        console.log(this.props.toDoListItem);
+        if(typeof this.props.toDoListItem.status === 'string'){
+            this.setState({
+                oldstatus:this.props.toDoListItem.status
+            })
+        }
 
         this.props.toDoListItem.status = <select onBlur={this.changeStatus}> 
         <option value = "complete">complete</option>
@@ -79,11 +97,16 @@ class ToDoItem extends Component {
 
 
     changeDesc = event =>{
+
+        
         if(event.target.value){
-            this.setState({
-                description: event.target.value
-            })
-            this.props.toDoListItem.description = event.target.value
+            
+            this.props.changeDesc(this,this.props.toDoListItem,event.target.value,this.state.oldname)
+
+            // this.setState({
+            //     description: event.target.value
+            // })
+            // this.props.toDoListItem.description = event.target.value
         }
         else{
             this.setState({
@@ -94,10 +117,13 @@ class ToDoItem extends Component {
 
     changeDate = event =>{
         if(event.target.value){
-            this.setState({
-                date: event.target.value
-            })
-            this.props.toDoListItem.due_date = event.target.value
+
+            this.props.changeDate(this,this.props.toDoListItem,event.target.value,this.state.olddate)
+
+            // this.setState({
+            //     date: event.target.value
+            // })
+            // this.props.toDoListItem.due_date = event.target.value
         }
         else{
             this.setState({
@@ -108,10 +134,13 @@ class ToDoItem extends Component {
 
     changeStatus = event =>{
         if(event.target.value){
-            this.setState({
-                status: event.target.value
-            })
-            this.props.toDoListItem.status = event.target.value
+
+            this.props.changeStatus(this,this.props.toDoListItem,event.target.value,this.state.oldstatus)
+
+            // this.setState({
+            //     status: event.target.value
+            // })
+            // this.props.toDoListItem.status = event.target.value
         }
         else{
             this.setState({
