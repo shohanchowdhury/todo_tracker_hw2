@@ -114,11 +114,11 @@
     
 }
 
-.list-controls-col {
-    /*display: flex;
+/* .list-controls-col {
+    display: flex;
     flex-direction: row; 
-    flex-wrap: nowrap;*/
-}
+    flex-wrap: nowrap;
+} */
 
 .list-item-control {
     width: 20%;

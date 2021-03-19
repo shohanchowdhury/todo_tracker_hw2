@@ -14,6 +14,7 @@ class Workspace extends Component {
         super(props);
         this.state = {
             toDoListItems:this.props.toDoListItems,
+            show:false
         }
         console.log(this.state.toDoListItems)
         
@@ -22,7 +23,10 @@ class Workspace extends Component {
 
     
     showModal = () => {
-        this.setState({ show: true });
+        // console.log(JSON.stringify(this.props.currentList))
+        if(JSON.stringify(this.props.currentList)!=="{\"items\":[]}"){
+            this.setState({ show: true });
+        }
       };
     
       hideModal = () => {
@@ -93,8 +97,15 @@ class Workspace extends Component {
         this.props.closeList();
     }
 
-    handleDeleteList = () => {
-        this.props.deleteList();
+    handleDeleteList1 = () => {
+        this.showModal()
+        
+    }
+
+    handleDeleteList2 = () => {
+
+        this.hideModal()
+        this.props.deleteList();    
     }
 
     printnothing = () => {
@@ -240,6 +251,14 @@ class Workspace extends Component {
     render() {
         return (
             <div id="workspace">
+                <div id="myModal" className="modal" style={!(this.state.show) ? {display: 'none'} : { color: 'block' }}>
+                    <div className="modal-content" >
+                        <span id="close-modal" className="close" onClick={this.hideModal} >&times;</span>
+                        <p>Are you sure you want to delete?</p>
+                        <span id="okay-delete-button" className="okay-delete-button" onClick={this.handleDeleteList2}>Confirm </span>
+                        <span id="dont-delete-button" className="dont-delete-button" onClick={this.hideModal}>Cancel</span>
+                    </div>
+                </div>
 
 
                 <div id="todo-list-header-card" className="list-item-card">

@@ -96,6 +96,75 @@
     background-color: var(--swatch-contrast);
 }
 
+/* .modal{
+    background-color: "black"
+} */
+
+.modal{
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+
+}
+.modal-content {
+    background-color: #353a44;
+    border: 1px solid #888;
+    color:#ffffff;
+    padding: 20px;
+    width: 30%; 
+    height: 15%;
+
+    position:relative;
+    margin: 15% auto; 
+    padding: 20px;
+    width: 30%; 
+    height: 15%;
+    }
+.close {
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}  
+#okay-delete-button{
+    position: relative;
+    top: 50px;
+}
+#dont-delete-button{
+    padding-left: 250px;
+    position: relative;
+    top: 50px;
+}
+#okay-delete-button:hover,
+#okay-delete-button:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}  
+
+#dont-delete-button:hover,
+#dont-delete-button:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}  
+
 #add-list-button {
     color: var(--swatch-accent);
 }

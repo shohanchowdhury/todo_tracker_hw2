@@ -16,10 +16,12 @@ import ChangeStatus_Transaction from './common/ChangeStatus_Transaction'
 
 
 
+
 // THESE ARE OUR REACT COMPONENTS
 import Navbar from './components/Navbar'
 import LeftSidebar from './components/LeftSidebar'
 import Workspace from './components/Workspace'
+import Modal from './components/Workspace'
 {/*import ItemsListHeaderComponent from './components/ItemsListHeaderComponent'
 import ItemsListComponent from './components/ItemsListComponent'
 import ListsComponent from './components/ListsComponent'
@@ -312,6 +314,7 @@ class App extends Component {
         hasUndo={this.hasUndo}
         hasRedo={this.hasRedo}
         tps={this.tps}
+        currentList={this.state.currentList}
         
         />
       </div>
